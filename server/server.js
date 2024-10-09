@@ -9,6 +9,7 @@ const connectDB = require('./connection.js');
 
 const HomemakerRoutes = require('./routes/Homemaker.routes.js');
 const CustomerRoutes = require('./routes/Customer.routes.js');
+const DeliveryPerson = require('./routes/DeliveryPerson.routes.js');
 
 connectDB();
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1/homemakers', HomemakerRoutes);
 app.use('/api/v1/customers', CustomerRoutes);
+app.use('/api/v1/delivryPerson', DeliveryPerson);
 
 const PORT = process.env.PORT || 5000;
 
