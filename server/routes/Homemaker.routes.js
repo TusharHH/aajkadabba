@@ -24,7 +24,6 @@ route.put('/user/:id', upload.single('profileImage'), updateHomemaker);
 route.delete('/user/:id', deleteHomemaker);
 
 
-// Cloud Kitchen routes
 route.post('/user/:id/cloud-kitchen', createCloudKitchen);
 route.put('/user/:id/cloud-kitchen', updateCloudKitchen);
 route.delete('/user/:id/cloud-kitchen', deleteCloudKitchen);

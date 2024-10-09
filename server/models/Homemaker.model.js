@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+
+const Review = require('../models/Review.model.js');
+
 const homemakerSchema = new mongoose.Schema({
     name: {
         type: String,
