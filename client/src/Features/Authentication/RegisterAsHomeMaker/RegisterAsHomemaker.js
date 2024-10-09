@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useHomemakerStore from '../../../store/homemaker.store.js';
 
 const RegisterAsHomeMaker = () => {
@@ -45,7 +45,7 @@ const RegisterAsHomeMaker = () => {
       };
       console.log('Form Data:', formData);
       await signup(formData);
-      navigate('/');
+      navigate('/'); // Redirect on success
     } catch (error) {
       console.error('Error during sign up:', error.message);
     }
