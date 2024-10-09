@@ -1,0 +1,2 @@
+# aajkadabba
+This project, developed during a 24-hour hackathon, aims to bridge the gap between home-cooked food and those who need it most—migrated students and employees in Mumbai. Our platform connects local housewives, who prepare home-cooked meals as cloud kitchens, with customers seeking healthy and convenient tiffin services.
