@@ -9,8 +9,8 @@ export default function EmployeeDashboard() {
             <Navbar />
             <div className="d-flex flex-column gap-4 mx-4">
                 <form className="">
-                    <div className="d-flex  px-3 py-2 border border-black rounded-5">
-                        <input type="text" className="w-100 form-control border-0 rounded-5" placeholder="Search restaurant"></input>
+                    <div className="d-flex  px-3 py-2 border border-black rounded-5 container ">
+                        <input type="text" className="form-control border-0 rounded-5 " placeholder="Search restaurant"></input>
                         <button className="btn btn-custom rounded-5 px-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -18,7 +18,7 @@ export default function EmployeeDashboard() {
                         </button>
                     </div>
                 </form>
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center d-block d-sm-none">
                     <img src="./images/offer.jpg" alt="" height={110} ></img>
                 </div>
                 <div className="d-flex flex-column mb-5">
@@ -44,7 +44,7 @@ export default function EmployeeDashboard() {
                         <LikedHomemakers/>
                         <LikedHomemakers/>
                         <LikedHomemakers/>
-                        
+
                     </div>
                 </div>
             </div>
