@@ -16,15 +16,31 @@
     color: #DC4412;
 }
 
+.custom-input {
+    border: 2px solid;
+    border-color: #959595;
+}
+
+.custom-input:focus {
+    border: 2px solid;
+    border-color: #FF6000;
+    outline: none; 
+    box-shadow: none; 
+}
+
 .nav-link.active{
     color : white
 }
-
-.homemaker-text{
-    font-size:11px;
+.btn-custom-green{
+    background-color: #07A436;
+    border-color: #07A436;
+    color: #ffffff;
 }
-
-.dish-text{
-    font-size:14px;
-    font-weight: semi-bold;
+.btn-custom-green:hover{
+    border-color: #07A436;
+    color: #07A436;
 }
+.min-vh-100 {
+    min-height: 100vh;
+  }
+  
