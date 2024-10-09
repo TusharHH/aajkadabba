@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 export default function Navbar() {
     return (
         <>
-            <nav className="navbar shadow bg-white rounded navbar-expand-lg bg-light" style={{ height: '80px' }}>
+            <nav className="navbar bg-white rounded navbar-expand-lg" style={{ height: '80px' }}>
                 <div className="container-fluid">
                     <button className="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
