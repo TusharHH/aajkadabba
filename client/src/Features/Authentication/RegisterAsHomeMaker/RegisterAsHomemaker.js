@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import useHomemakerStore from '../../../store/homemaker.store.js';
 
 const RegisterAsHomeMaker = () => {
+  const [frontside, setFrontside] = useState(true);
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
   const { signup } = useHomemakerStore();
