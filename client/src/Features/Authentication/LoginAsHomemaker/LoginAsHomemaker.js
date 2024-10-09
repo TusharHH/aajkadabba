@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import useHomemakerStore from '../../../store/homemaker.store.js';
 
-const RegisterAsHomeMaker = () => {
-  const [frontside, setFrontside] = useState(true);
+const LoginAsHomemaker = () => {
+    const [frontside, setFrontside] = useState(true);
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
   const { signup } = useHomemakerStore();
@@ -64,41 +64,24 @@ const RegisterAsHomeMaker = () => {
       console.error('Error during sign up:', error.message);
     }
   };
-
-
   return (
     <>
       <div className="d-flex align-items-center justify-content-center min-vh-100">
         <div className="container mt-4">
           <div className="row justify-content-center">
-            <div className="col-md-4 d-none d-md-block d-flex">
-              <img src='./images/LoginImage.jpg' alt='Logo' className='shadow-lg img-fluid bg-white ' style={{ width: '100%', height: '100vh', objectFit: 'cover' }} />
+            <div className="col-md-4 d-none d-md-block">
+              <img src='./images/LoginImage.jpg' alt='Logo' className='shadow-lg bg-white' style={{ width: '100%', height: '100vh', objectFit: 'cover' }} />
             </div>
             <div className="col-md-4 col-sm border p-3 shadow-lg bg-white mb-5  d-flex flex-column" style={{ height: '100vh', objectFit: 'cover' }}>
               <div className='d-flex w-100 justify-content-center my-5'>
                 <img src='./images/Logo_Text.jpg' alt='Logo' />
               </div>
               <div className='d-flex w-100 justify-content-center'>
-                {frontside?<p className='fw-bold' style={{ fontSize: "35px" }}>Create your account</p>:<p className='fw-bold' style={{ fontSize: "35px" }}>Add Personal Info</p>}
+                {frontside?<p className='fw-bold' style={{ fontSize: "35px" }}>Login your account</p>:<p className='fw-bold' style={{ fontSize: "35px" }}>Add Personal Info</p>}
               </div>
               <form onSubmit={handleSubmit(onSubmit)} noValidate >
                 {frontside ? (
                   <>
-                  <div className="row-md-4 mt-1">
-                      <label htmlFor="name" className="form-label">Already have a account? <Link className="fs-6" style={{color:"#FF6000"}} to="/login">Login</Link></label>
-                    </div>
-                    <div className="row-md-4 mt-1">
-                      <label htmlFor="name" className="form-label">Name</label>
-                      <input
-                        type="text"
-                        className={`form-control ${errors.name ? 'is-invalid' : ''} custom-input`}
-                        id="name"
-                        placeholder='Alex'
-                        {...register('name', { required: true })}
-                        required
-                      />
-                      {errors.name && <div className="invalid-feedback">Name is required</div>}
-                    </div>
 
                     <div className="row-md-4 mt-1">
                       <label htmlFor="email" className="form-label">Email</label>
@@ -124,23 +107,14 @@ const RegisterAsHomeMaker = () => {
                       />
                       {errors.password && <div className="invalid-feedback">Password must be at least 8 characters long</div>}
                     </div>
-
-                    <div className="row-md-4 mt-1">
-                      <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-                      <input
-                        type="password"
-                        className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''} custom-input`}
-                        id="confirmPassword"
-                        {...register('confirmPassword', { required: true, minLength: 8 })}
-                        required
-                      />
-                      {errors.confirmPassword && <div className="invalid-feedback">Password must match</div>}
-                    </div>
-
                     <div className='mt-5'>
                       <button className="fs-6 btn btn-custom px-4 w-100" type='button' onClick={() => { setFrontside(false) }}>
-                        Continue
+                        Login
                       </button>
+                    </div>
+
+                    <div className="row-md-4 mt-1">
+                      <label htmlFor="email" className="form-label">Create New Account? <Link className="fs-6" style={{color:"#FF6000"}} to="/signup">SignUp</Link></label>
                     </div>
                   </>
                 ) : (
@@ -205,7 +179,7 @@ const RegisterAsHomeMaker = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default RegisterAsHomeMaker;
+export default LoginAsHomemaker
