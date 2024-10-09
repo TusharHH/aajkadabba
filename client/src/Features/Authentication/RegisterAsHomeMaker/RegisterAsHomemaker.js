@@ -1,48 +1,58 @@
-import React,{useState} from 'react';
-
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import Axios from 'axios';
 
 const RegisterAsHomeMaker = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors, isSubmitting },setValue } = useForm();
-  const [locationFetched, setLocationFetched] = useState(false);
+  const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
   const [locationError, setLocationError] = useState('');
 
-  const onSubmit = async (data) => {
-    if (!locationFetched) {
-      alert("Please fetch your location before submitting the form.");
-      return;
-    }
+  // Track latitude and longitude state separately
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
-    try {
-      const response = await Axios.post('http://localhost:5001/api/v1/auth/signup', data);
-      const result = response.data;
-      console.log(result);
-    } catch (error) {
-      console.error(error.message);
-    }
+  // Function to fetch location when the user clicks Sign Up
+  const fetchLocation = () => {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setLatitude(latitude);
+            setLongitude(longitude);
+            setValue('latitude', latitude);
+            setValue('longitude', longitude);
+            setLocationError('');
+            resolve({ latitude, longitude });
+          },
+          (error) => {
+            setLocationError('Unable to fetch location. Please allow location access and try again.');
+            reject(new Error('Location fetch error'));
+          }
+        );
+      } else {
+        setLocationError('Geolocation is not supported by this browser.');
+        reject(new Error('Geolocation not supported'));
+      }
+    });
   };
 
-  const fetchLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setValue('latitude', latitude);
-          setValue('longitude', longitude);
-          setLocationFetched(true);
-          setLocationError('');
-          console.log('Location fetched:', latitude, longitude);
-        },
-        (error) => {
-          setLocationError('Unable to fetch location. Please allow location access and try again.');
-          console.error(error);
-        }
-      );
-    } else {
-      setLocationError('Geolocation is not supported by this browser.');
+  // Handle form submission
+  const onSubmit = async (data) => {
+    try {
+      // Fetch the user's current location before submission
+      const locationData = await fetchLocation();
+      console.log("", locationData);
+      // Include the fetched location data in the form submission
+      const formData = {
+        ...data,
+        latitude: locationData.latitude,
+        longitude: locationData.longitude,
+      };
+
+      // Sending data to backend
+    } catch (error) {
+      console.error('Error during sign up:', error.message);
     }
   };
 
@@ -57,8 +67,7 @@ const RegisterAsHomeMaker = () => {
       <div className="container mt-4">
         <div className="row justify-content-center">
           <div className="col-md-4 border p-3 shadow bg-white mb-5">
-            <form onSubmit={handleSubmit()} noValidate>
-
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="row-md-4 mt-1">
                 <label htmlFor="name" className="form-label">Name</label>
                 <input
@@ -81,7 +90,7 @@ const RegisterAsHomeMaker = () => {
                 />
                 {errors.email && <div className="invalid-feedback">Invalid email address</div>}
               </div>
-              <div className="row-md-4 mt-1 ">
+              <div className="row-md-4 mt-1">
                 <label htmlFor="password" className="form-label">Password</label>
                 <input
                   type="password"
@@ -92,16 +101,16 @@ const RegisterAsHomeMaker = () => {
                 />
                 {errors.password && <div className="invalid-feedback">Password must be at least 8 characters long</div>}
               </div>
-              <div className="row-md-4 mt-1 ">
-                <label htmlFor="password" className="form-label">Confirm Password</label>
+              <div className="row-md-4 mt-1">
+                <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
                 <input
                   type="password"
-                  className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                  id="password"
-                  {...register('password', { required: true, minLength: 8 })}
+                  className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                  id="confirmPassword"
+                  {...register('confirmPassword', { required: true, minLength: 8 })}
                   required
                 />
-                {errors.password && <div className="invalid-feedback">Password must be at least 8 characters long</div>}
+                {errors.confirmPassword && <div className="invalid-feedback">Password must be at least 8 characters long</div>}
               </div>
               <div className="row-md-4 mt-1">
                 <label htmlFor="address" className="form-label">Address</label>
@@ -129,12 +138,7 @@ const RegisterAsHomeMaker = () => {
                 />
                 {errors.phone && <div className="invalid-feedback">{errors.phone.message}</div>}
               </div>
-              <div className="row-md-4 mt-3">
-                <button type="button" className="btn btn-custom w-100 my-4" onClick={fetchLocation}>
-                  Fetch Current Location
-                </button>
-                {locationError && <div className="text-danger mt-2">{locationError}</div>}
-              </div>
+              {locationError && <div className="text-danger mt-2">{locationError}</div>}
               <div className="col-12 mt-2">
                 <button
                   className="btn btn-custom"
@@ -149,7 +153,7 @@ const RegisterAsHomeMaker = () => {
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export default RegisterAsHomeMaker;
