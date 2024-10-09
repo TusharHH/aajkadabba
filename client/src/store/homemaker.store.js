@@ -38,9 +38,13 @@ const useHomemakerStore = create((set) => ({
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            const user = response.data.user;
+            const user = response.data.data.user;
             localStorage.setItem('authToken', response.data.data.user.token);
             localStorage.setItem('user', JSON.stringify(user));
+            
+            console.log(response);
+            
+
             set({ user, error: null });
         } catch (error) {
             set({ error: error.response.data.message });
