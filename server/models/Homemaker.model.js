@@ -28,12 +28,10 @@ const homemakerSchema = new mongoose.Schema({
     },
     cloudKitchenDetails: {
         name: {
-            type: String,
-            required: true
+            type: String
         },
         description: {
-            type: String,
-            required: true
+            type: String
         },
         rating: {
             type: Number,
@@ -74,12 +72,10 @@ const homemakerSchema = new mongoose.Schema({
     },
     location: {
         latitude: {
-            type: Number,
-            required: true
+            type: Number
         },
         longitude: {
-            type: Number,
-            required: true
+            type: Number
         }
     },
     failedOrders: {

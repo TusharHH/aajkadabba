@@ -11,7 +11,8 @@ const HomemakerRoutes = require('./routes/Homemaker.routes.js');
 
 connectDB();
 
-app.use(express.json());
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
 
 app.use('/api/v1/homemakers', HomemakerRoutes);
 
