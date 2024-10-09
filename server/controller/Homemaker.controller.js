@@ -14,15 +14,14 @@ const generateToken = (userId) => {
 };
 
 const login = AsyncHandler(async (req, res) => {
-
     const { email, phoneNumber, password } = req.body;
 
     if (!email && !phoneNumber) {
-        ApiResponse(res, 400, false, 'Please provide either an email or phone number !!', {});
+        return ApiResponse(res, 400, false, 'Please provide either an email or phone number !!', {});
     }
 
     if (!password) {
-        ApiResponse(res, 400, false, 'Please provide your password !!', {});
+        return ApiResponse(res, 400, false, 'Please provide your password !!', {});
     }
 
     let user;
@@ -34,21 +33,20 @@ const login = AsyncHandler(async (req, res) => {
     }
 
     if (!user) {
-        ApiResponse(res, 404, false, 'User not found !!');
+        return ApiResponse(res, 404, false, 'User not found !!', {});
     }
 
     const isPasswordMatch = await user.verifyPassword(password);
 
     if (!isPasswordMatch) {
-        ApiResponse(res, 401, false, 'Invalid Password !!', {});
+        return ApiResponse(res, 401, false, 'Invalid Password !!', {});
     }
 
     const token = generateToken(user._id);
 
     user.token = token;
 
-    ApiResponse(res, 200, true, 'Homemaker logged in succesfully !!', { user });
-
+    ApiResponse(res, 200, true, 'Homemaker logged in successfully !!', { user });
 });
 
 const signup = AsyncHandler(async (req, res) => {
@@ -101,10 +99,23 @@ const signup = AsyncHandler(async (req, res) => {
 const getHomemakerById = AsyncHandler(async (req, res) => {
     const homemakerId = req.params.id;
 
-    const homemaker = await Homemaker.findById(homemakerId).populate('cloudKitchenDetails.menuItems reviews activeOrders');
+    const homemaker = await Homemaker.findById(homemakerId);
 
     if (!homemaker) {
         return ApiResponse(res, 404, false, 'Homemaker not found!', {});
+    }
+
+    
+    if (homemaker.cloudKitchenDetails && homemaker.cloudKitchenDetails.length > 0) {
+        await homemaker.populate('cloudKitchenDetails');
+    }
+
+    if (homemaker.reviews && homemaker.reviews.length > 0) {
+        await homemaker.populate('reviews');
+    }
+
+    if (homemaker.activeOrders && homemaker.activeOrders > 0) {
+        await homemaker.populate('activeOrders');
     }
 
     ApiResponse(res, 200, true, 'Homemaker retrieved successfully!', { homemaker });
@@ -127,7 +138,6 @@ const updateHomemaker = AsyncHandler(async (req, res) => {
     if (address) homemaker.address = address;
 
     if (req.file) {
-
         if (homemaker.profileImage) {
             const publicId = homemaker.profileImage.split('/').pop().split('.')[0];
             await deleteFromCloudinary(publicId);
@@ -139,7 +149,6 @@ const updateHomemaker = AsyncHandler(async (req, res) => {
         } else {
             return ApiResponse(res, 500, false, 'Error uploading new profile image!', {});
         }
-
     }
 
     await homemaker.save();
@@ -154,12 +163,12 @@ const deleteHomemaker = AsyncHandler(async (req, res) => {
 
     if (!homemaker) {
         return ApiResponse(res, 404, false, 'Homemaker not found!', {});
-    };
+    }
 
     if (homemaker.profileImage) {
         const publicId = homemaker.profileImage.split('/').pop().split('.')[0];
         await deleteFromCloudinary(publicId);
-    };
+    }
 
     await homemaker.deleteOne();
 
@@ -167,20 +176,36 @@ const deleteHomemaker = AsyncHandler(async (req, res) => {
 });
 
 const listHomemakers = AsyncHandler(async (req, res) => {
-    const homemakers = await Homemaker.find().populate('cloudKitchenDetails.menuItems reviews activeOrders');
-    ApiResponse(res, 200, true, 'Homemakers retrieved successfully!', { homemakers });
+    const homemakers = await Homemaker.find();
+
+    
+    const populatedHomemakers = await Promise.all(homemakers.map(async (homemaker) => {
+        if (homemaker.cloudKitchenDetails) {
+            await homemaker.populate('cloudKitchenDetails');
+        }
+
+        if (homemaker.reviews) {
+            await homemaker.populate('reviews');
+        }
+
+        if (homemaker.activeOrders) {
+            await homemaker.populate('activeOrders');
+        }
+
+        return homemaker;
+    }));
+
+    ApiResponse(res, 200, true, 'Homemakers retrieved successfully!', { homemakers: populatedHomemakers });
 });
 
 const createCloudKitchen = AsyncHandler(async (req, res) => {
     const homemakerId = req.params.id;
     const { name, description } = req.body;
 
-
     const homemaker = await Homemaker.findById(homemakerId);
     if (!homemaker) {
         return ApiResponse(res, 404, false, 'Homemaker not found!', {});
     }
-
 
     homemaker.cloudKitchenDetails = {
         name,
@@ -198,12 +223,10 @@ const updateCloudKitchen = AsyncHandler(async (req, res) => {
     const homemakerId = req.params.id;
     const { name, description } = req.body;
 
-
     const homemaker = await Homemaker.findById(homemakerId);
     if (!homemaker) {
         return ApiResponse(res, 404, false, 'Homemaker not found!', {});
     }
-
 
     if (homemaker.cloudKitchenDetails) {
         if (name) homemaker.cloudKitchenDetails.name = name;
@@ -220,7 +243,6 @@ const updateCloudKitchen = AsyncHandler(async (req, res) => {
 const deleteCloudKitchen = AsyncHandler(async (req, res) => {
     const homemakerId = req.params.id;
 
-
     const homemaker = await Homemaker.findById(homemakerId);
     if (!homemaker) {
         return ApiResponse(res, 404, false, 'Homemaker not found!', {});
@@ -228,7 +250,6 @@ const deleteCloudKitchen = AsyncHandler(async (req, res) => {
 
     if (homemaker.cloudKitchenDetails) {
         homemaker.cloudKitchenDetails = {};
-
         await homemaker.save();
 
         ApiResponse(res, 200, true, 'Cloud kitchen deleted successfully!', {});
@@ -236,7 +257,6 @@ const deleteCloudKitchen = AsyncHandler(async (req, res) => {
         ApiResponse(res, 404, false, 'Cloud kitchen not found!', {});
     }
 });
-
 
 module.exports = {
     login,
