@@ -180,15 +180,15 @@ const listHomemakers = AsyncHandler(async (req, res) => {
 
     
     const populatedHomemakers = await Promise.all(homemakers.map(async (homemaker) => {
-        if (homemaker.cloudKitchenDetails) {
+        if (homemaker.cloudKitchenDetails && homemaker.cloudKitchenDetails.length > 0) {
             await homemaker.populate('cloudKitchenDetails');
         }
 
-        if (homemaker.reviews) {
+        if (homemaker.reviews && homemaker.reviews.length > 0) {
             await homemaker.populate('reviews');
         }
 
-        if (homemaker.activeOrders) {
+        if (homemaker.activeOrders && homemaker.activeOrders.length > 0) {
             await homemaker.populate('activeOrders');
         }
 
