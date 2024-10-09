@@ -34,13 +34,13 @@ const RegisterAsHomeMaker = () => {
         reject(new Error('Geolocation not supported'));
       }
     });
+
   };
 
 
   const onSubmit = async (data) => {
     try {
       const locationData = await fetchLocation();
-
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('email', data.email);
@@ -48,18 +48,15 @@ const RegisterAsHomeMaker = () => {
       formData.append('confirmPassword', data.confirmPassword);
       formData.append('address', data.address);
       formData.append('phone', data.phone);
-      formData.append('latitude', locationData.latitude || '');  // default to empty string if location fetch failed
-      formData.append('longitude', locationData.longitude || ''); // default to empty string if location fetch failed
-      
+      formData.append('latitude', locationData.latitude || '');
+      formData.append('longitude', locationData.longitude || '');
 
       if (data.profileImage[0]) {
         formData.append('profileImage', data.profileImage[0]);
-        formData.append('profileImage', data.profileImage[0]);
       }
 
-      // Attempt signup
       await signup(formData);
-      navigate('/'); // Redirect on success
+      navigate('/');
     } catch (error) {
       console.error('Error during sign up:', error.message);
     }
@@ -139,12 +136,12 @@ const RegisterAsHomeMaker = () => {
                 </>
               ) : (
                 <>
-                  <div className='mt-5'>
+                  {/* <div className='mt-5'>
                     <button className="fs-6 btn btn-custom-green px-4 w-100" type='button' onClick={fetchLocation}>
                       <i className="bi bi-geo-alt me-2 text-white"></i>
                       Get Location
                     </button>
-                  </div>
+                  </div> */}
 
                   <div className="row-md-4 mt-1">
                     <label htmlFor="phone" className="form-label">Phone Number</label>

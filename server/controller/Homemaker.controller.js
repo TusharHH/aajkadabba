@@ -52,6 +52,8 @@ const login = AsyncHandler(async (req, res) => {
 const signup = AsyncHandler(async (req, res) => {
     const { name, email, password, phoneNumber, address, latitude, longitude } = req.body;
 
+    console.log(req.body);
+
     if (!name || !email || !password || !phoneNumber || !address || !latitude || !longitude) {
         return ApiResponse(res, 400, false, 'All fields are required, including location coordinates!', {});
     }
@@ -64,6 +66,8 @@ const signup = AsyncHandler(async (req, res) => {
     let profileImageUrl = null;
 
     if (req.file) {
+        console.log(req.file);
+
         const avatarFilePath = req.file.path;
         const uploadResponse = await uploadOnCloudinary(avatarFilePath);
         if (uploadResponse && uploadResponse.url) {
@@ -105,7 +109,7 @@ const getHomemakerById = AsyncHandler(async (req, res) => {
         return ApiResponse(res, 404, false, 'Homemaker not found!', {});
     }
 
-    
+
     if (homemaker.cloudKitchenDetails && homemaker.cloudKitchenDetails.length > 0) {
         await homemaker.populate('cloudKitchenDetails');
     }
@@ -178,7 +182,7 @@ const deleteHomemaker = AsyncHandler(async (req, res) => {
 const listHomemakers = AsyncHandler(async (req, res) => {
     const homemakers = await Homemaker.find();
 
-    
+
     const populatedHomemakers = await Promise.all(homemakers.map(async (homemaker) => {
         if (homemaker.cloudKitchenDetails && homemaker.cloudKitchenDetails.length > 0) {
             await homemaker.populate('cloudKitchenDetails');
