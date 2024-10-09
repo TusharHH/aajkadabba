@@ -38,7 +38,7 @@ export default function Navbar() {
                                         </svg>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link fs-6 btn btn-custom px-4" to="/login">
+                                        <Link className="nav-link fs-6 btn btn-custom px-4" to="/signup">
                                             Sign Up
                                         </Link>
                                     </li>

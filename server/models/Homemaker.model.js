@@ -19,8 +19,7 @@ const homemakerSchema = new mongoose.Schema({
         required: true
     },
     phoneNumber: {
-        type: String,
-        required: true
+        type: String
     },
     address: {
         type: String,
