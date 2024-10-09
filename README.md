@@ -10,6 +10,7 @@ This project, developed during a 24-hour hackathon, aims to bridge the gap betwe
 npm install -D tailwindcss
 npx tailwindcss init
 npm i react-router-dom
+npm i react-hook-form
 
 # For Server
 npm i express mongoose cors bcryptjs cloudinary multer jsonwebtoken nodemon dotenv
