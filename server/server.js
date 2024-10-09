@@ -5,11 +5,11 @@ dotenv.config();
 
 const app = express();
 
-const connection = require('./connection.js');
+const connectDB = require('./connection.js');
 
-const { HomemakerRoutes } = require('./routes/Homemaker.routes.js');
+const HomemakerRoutes = require('./routes/Homemaker.routes.js');
 
-connection();
+connectDB();
 
 app.use(express.json());
 
