@@ -37,7 +37,7 @@ const login = AsyncHandler(async (req, res) => {
 
 });
 
-exports.models = {
+module.exports = {
     login
 };
 

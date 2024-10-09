@@ -8,4 +8,4 @@ const {
 
 route.post('/user', login);
 
-exports.model = route;
+module.exports = route;
