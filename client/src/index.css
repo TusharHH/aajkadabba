@@ -19,3 +19,12 @@
 .nav-link.active{
     color : white
 }
+
+.homemaker-text{
+    font-size:11px;
+}
+
+.dish-text{
+    font-size:14px;
+    font-weight: semi-bold;
+}

@@ -4,6 +4,8 @@ import Homepage from '../Features/Homepage/Homepage';
 import HomePageCart from '../components/HomePageCart';
 import RegisterAsHomeMaker from '../Features/Authentication/RegisterAsHomeMaker/RegisterAsHomemaker';
 import EmployeeDashboard from '../Features/Dashboard/EmployeesDashboard/EmployeeDashboard';
+import HomemakerDashboard from '../Features/Dashboard/HomeMakerDashboard/HomeMakerDashboard';
+import CloudKitchenCreation from '../Features/Dashboard/HomeMakerDashboard/CloudKitchenCreation';
 
 function DabbaRoutes (){
     return (
@@ -11,7 +13,10 @@ function DabbaRoutes (){
             <Routes>
                 <Route path='/' element={<Homepage/>}></Route>
                 <Route path='/login' element={<RegisterAsHomeMaker/>} ></Route>
-                <Route path='/dashboard' element={<EmployeeDashboard/>} ></Route>
+                <Route path='/CustomerDashboard' element={<EmployeeDashboard/>} ></Route>
+                <Route path='/HomemakerDashboard' element={<HomemakerDashboard/>}>
+                    <Route path='CloudKitchenCreation' element={<CloudKitchenCreation />}></Route>
+                </Route>
             </Routes>
         </>
     )
