@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import useHomemakerStore from '../../../store/homemaker.store.js';
+import useHomemakerStore from '../../../store/homemaker.store.js';
 
 const RegisterAsHomeMaker = () => {
   const [frontside, setFrontside] = useState(true);
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
+  const { signup } = useHomemakerStore();
   const { signup } = useHomemakerStore();
   const [locationError, setLocationError] = useState('');
   
@@ -23,15 +25,19 @@ const RegisterAsHomeMaker = () => {
           },
           (error) => {
             setLocationError('Unable to fetch location. Please allow location access and try again.');
+
+            console.error('Location fetch error:', error.message);
             reject(new Error('Location fetch error'));
           }
         );
       } else {
         setLocationError('Geolocation is not supported by this browser.');
+        console.error('Geolocation not supported');
         reject(new Error('Geolocation not supported'));
       }
     });
   };
+
 
   const onSubmit = async (data) => {
     try {
@@ -44,19 +50,22 @@ const RegisterAsHomeMaker = () => {
       formData.append('confirmPassword', data.confirmPassword);
       formData.append('address', data.address);
       formData.append('phone', data.phone);
-      formData.append('latitude', locationData.latitude);
-      formData.append('longitude', locationData.longitude);
+      formData.append('latitude', locationData.latitude || '');  // default to empty string if location fetch failed
+      formData.append('longitude', locationData.longitude || ''); // default to empty string if location fetch failed
 
       if (data.profileImage[0]) {
         formData.append('profileImage', data.profileImage[0]);
+        formData.append('profileImage', data.profileImage[0]);
       }
 
+      // Attempt signup
       await signup(formData);
-      navigate('/');
+      navigate('/'); // Redirect on success
     } catch (error) {
       console.error('Error during sign up:', error.message);
     }
   };
+
 
   return (
     <>
