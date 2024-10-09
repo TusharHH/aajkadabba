@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+
+const Review = require('../models/Review.model.js');
+
 const homemakerSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -28,12 +31,10 @@ const homemakerSchema = new mongoose.Schema({
     },
     cloudKitchenDetails: {
         name: {
-            type: String,
-            required: true
+            type: String
         },
         description: {
-            type: String,
-            required: true
+            type: String
         },
         rating: {
             type: Number,
@@ -74,12 +75,10 @@ const homemakerSchema = new mongoose.Schema({
     },
     location: {
         latitude: {
-            type: Number,
-            required: true
+            type: Number
         },
         longitude: {
-            type: Number,
-            required: true
+            type: Number
         }
     },
     failedOrders: {

@@ -15,3 +15,7 @@
     border-color: #DC4412;
     color: #DC4412;
 }
+
+.nav-link.active{
+    color : white
+}

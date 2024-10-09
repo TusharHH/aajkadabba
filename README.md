@@ -13,3 +13,5 @@ npm i react-router-dom
 
 # For Server
 npm i express mongoose cors bcryptjs cloudinary multer jsonwebtoken nodemon dotenv
+npm install multer
+npm i fs path
