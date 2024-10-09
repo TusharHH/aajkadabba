@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import useHomemakerStore from '../../../store/homemaker.store.js'; // Import store
 
 const RegisterAsHomeMaker = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
+  const { signup } = useHomemakerStore(); // Use the signup action from Zustand store
   const [locationError, setLocationError] = useState('');
-
-  // Track latitude and longitude state separately
+  
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
-  // Function to fetch location when the user clicks Sign Up
+  // Fetch Location
   const fetchLocation = () => {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
@@ -37,20 +38,28 @@ const RegisterAsHomeMaker = () => {
     });
   };
 
-  // Handle form submission
   const onSubmit = async (data) => {
     try {
-      // Fetch the user's current location before submission
+      // Fetch location and combine with form data
       const locationData = await fetchLocation();
-      console.log("", locationData);
-      // Include the fetched location data in the form submission
-      const formData = {
-        ...data,
-        latitude: locationData.latitude,
-        longitude: locationData.longitude,
-      };
 
-      // Sending data to backend
+      // Create FormData object
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('password', data.password);
+      formData.append('confirmPassword', data.confirmPassword);
+      formData.append('address', data.address);
+      formData.append('phone', data.phone);
+      formData.append('latitude', locationData.latitude);
+      formData.append('longitude', locationData.longitude);
+
+      if (data.profileImage[0]) {
+        formData.append('profileImage', data.profileImage[0]); 
+      }
+
+      await signup(formData);
+      navigate('/');
     } catch (error) {
       console.error('Error during sign up:', error.message);
     }
@@ -79,17 +88,22 @@ const RegisterAsHomeMaker = () => {
                 />
                 {errors.name && <div className="invalid-feedback">Name is required</div>}
               </div>
+              
               <div className="row-md-4 mt-1">
                 <label htmlFor="email" className="form-label">Email</label>
                 <input
                   type="email"
                   className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                   id="email"
-                  {...register('email', { required: true, pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ })}
+                  {...register('email', {
+                    required: true,
+                    pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  })}
                   required
                 />
                 {errors.email && <div className="invalid-feedback">Invalid email address</div>}
               </div>
+              
               <div className="row-md-4 mt-1">
                 <label htmlFor="password" className="form-label">Password</label>
                 <input
@@ -101,6 +115,7 @@ const RegisterAsHomeMaker = () => {
                 />
                 {errors.password && <div className="invalid-feedback">Password must be at least 8 characters long</div>}
               </div>
+              
               <div className="row-md-4 mt-1">
                 <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
                 <input
@@ -110,18 +125,20 @@ const RegisterAsHomeMaker = () => {
                   {...register('confirmPassword', { required: true, minLength: 8 })}
                   required
                 />
-                {errors.confirmPassword && <div className="invalid-feedback">Password must be at least 8 characters long</div>}
+                {errors.confirmPassword && <div className="invalid-feedback">Password must match</div>}
               </div>
+
               <div className="row-md-4 mt-1">
                 <label htmlFor="address" className="form-label">Address</label>
                 <textarea
                   className={`form-control ${errors.address ? 'is-invalid' : ''}`}
                   id="address"
-                  {...register('address', { required: 'Address is required' })}
+                  {...register('address', { required: true })}
                   required
                 />
                 {errors.address && <div className="invalid-feedback">{errors.address.message}</div>}
               </div>
+
               <div className="mb-3">
                 <label htmlFor="phone" className="form-label">Phone Number</label>
                 <input
@@ -130,15 +147,24 @@ const RegisterAsHomeMaker = () => {
                   className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
                   {...register('phone', {
                     required: 'Phone number is required',
-                    pattern: {
-                      value: /^[0-9]{10}$/,  // Regex to allow only 10 digits
-                      message: 'Phone number must be exactly 10 digits'
-                    }
+                    pattern: { value: /^[0-9]{10}$/, message: 'Phone number must be exactly 10 digits' },
                   })}
                 />
                 {errors.phone && <div className="invalid-feedback">{errors.phone.message}</div>}
               </div>
+
+              <div className="row-md-4 mt-1">
+                <label htmlFor="profileImage" className="form-label">Profile Image</label>
+                <input
+                  type="file"
+                  className={`form-control ${errors.profileImage ? 'is-invalid' : ''}`}
+                  id="profileImage"
+                  {...register('profileImage', { required: false })}
+                />
+              </div>
+
               {locationError && <div className="text-danger mt-2">{locationError}</div>}
+
               <div className="col-12 mt-2">
                 <button
                   className="btn btn-custom"
@@ -154,6 +180,6 @@ const RegisterAsHomeMaker = () => {
       </div>
     </>
   );
-}
+};
 
 export default RegisterAsHomeMaker;
