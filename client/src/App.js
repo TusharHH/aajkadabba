@@ -5,7 +5,6 @@ function App() {
   return (
     <>
       <DabbaRoutes/>
-      <h1>Girish</h1>
     </>
   );
 }
