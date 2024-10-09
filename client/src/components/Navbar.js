@@ -13,7 +13,7 @@ export default function Navbar() {
                             <Link className="navbar-brand rounded" to="/"><img className="w-100" style={{ maxHeight: '70px' }} src='./images/Logo_Text.jpg' alt="logoText" /></Link>
                         </div>
 
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div className="collapse navbar-collapse bg-white" id="navbarSupportedContent">
                             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 " style={{ gap: '20px' }}>
                                 <li className="nav-item">
                                     <Link className="nav-link active fs-6" aria-current="page" to="/">Home</Link>
@@ -25,7 +25,7 @@ export default function Navbar() {
                                     <Link className="nav-link fs-6" to="/contactUs">Contact Us</Link>
                                 </li>
                             </ul>
-                            <ul className="navbar-nav  mb-2 mb-lg-0 d-flex align-items-center ms-5">
+                            <ul className="navbar-nav  mb-2 mb-lg-0 d-flex align-items-sm-centerms-5">
                                 <ul className="navbar-nav me-0" style={{ gap: '50px' }}>
                                     <li className="nav-item">
                                         <Link className="nav-link" style={{ color: "orange", textDecoration: "underline" }} to="/login">
