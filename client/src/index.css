@@ -19,3 +19,12 @@
 .nav-link.active{
     color : white
 }
+.btn-custom-green{
+    background-color: #07A436;
+    border-color: #07A436;
+    color: #ffffff;
+}
+.btn-custom-green:hover{
+    border-color: #07A436;
+    color: #07A436;
+}
