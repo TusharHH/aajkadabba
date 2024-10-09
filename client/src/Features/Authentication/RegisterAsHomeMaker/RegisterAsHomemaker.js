@@ -9,7 +9,7 @@ const RegisterAsHomeMaker = () => {
   const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
   const { signup } = useHomemakerStore();
   const [locationError, setLocationError] = useState('');
-  
+
   const fetchLocation = () => {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
@@ -50,6 +50,7 @@ const RegisterAsHomeMaker = () => {
       formData.append('phone', data.phone);
       formData.append('latitude', locationData.latitude || '');  // default to empty string if location fetch failed
       formData.append('longitude', locationData.longitude || ''); // default to empty string if location fetch failed
+      
 
       if (data.profileImage[0]) {
         formData.append('profileImage', data.profileImage[0]);
@@ -74,7 +75,7 @@ const RegisterAsHomeMaker = () => {
               <img src='./images/Logo_Text.jpg' alt='Logo' />
             </div>
             <div className='d-flex w-100 justify-content-center'>
-              <p className='fw-bold' style={{fontSize:"35px"}}>Create your account</p>
+              <p className='fw-bold' style={{ fontSize: "35px" }}>Create your account</p>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
               {frontside ? (
@@ -99,7 +100,7 @@ const RegisterAsHomeMaker = () => {
                       id="email"
                       {...register('email', { required: true, pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ })}
                       required
-                      
+
                     />
                     {errors.email && <div className="invalid-feedback">Invalid email address</div>}
                   </div>
@@ -112,7 +113,7 @@ const RegisterAsHomeMaker = () => {
                       id="password"
                       {...register('password', { required: true, minLength: 8 })}
                       required
-                      
+
                     />
                     {errors.password && <div className="invalid-feedback">Password must be at least 8 characters long</div>}
                   </div>
@@ -125,7 +126,7 @@ const RegisterAsHomeMaker = () => {
                       id="confirmPassword"
                       {...register('confirmPassword', { required: true, minLength: 8 })}
                       required
-                      
+
                     />
                     {errors.confirmPassword && <div className="invalid-feedback">Password must match</div>}
                   </div>
@@ -153,7 +154,7 @@ const RegisterAsHomeMaker = () => {
                       id="phone"
                       {...register('phone', { required: true, pattern: /^[0-9]{10}$/ })}
                       required
-                      
+
                     />
                     {errors.phone && <div className="invalid-feedback">Valid phone number is required (10 digits)</div>}
                   </div>
@@ -166,9 +167,21 @@ const RegisterAsHomeMaker = () => {
                       id="address"
                       {...register('address', { required: true, minLength: 5 })}
                       required
-                      
+
                     />
                     {errors.address && <div className="invalid-feedback">Address must be at least 5 characters long</div>}
+                  </div>
+
+                  <div className="row-md-4 mt-1">
+                    <label htmlFor="profileImage" className="form-label">Profile Image</label>
+                    <input
+                      type="file"
+                      className={`form-control ${errors.profileImage ? 'is-invalid' : ''}`}
+                      id="profileImage"
+                      {...register('profileImage', { required: true })}
+                      style={{ border: "2px solid #FF6000" }}
+                    />
+                    {errors.profileImage && <div className="invalid-feedback">Profile image is required</div>}
                   </div>
 
                   <div className='mt-5'>
