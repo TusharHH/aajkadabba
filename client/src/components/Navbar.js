@@ -16,13 +16,13 @@ export default function Navbar() {
                         <div className="collapse navbar-collapse bg-white" id="navbarSupportedContent">
                             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 " style={{ gap: '20px' }}>
                                 <li className="nav-item">
-                                    <Link className="nav-link active fs-6" aria-current="page" to="/">Home</Link>
+                                    <Link className="nav-link active fw-bold fs-6" aria-current="page" to="/">Home</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link fs-6" to="/aboutUs">About Us</Link>
+                                    <Link className="nav-link fw-bold fs-6" to="/aboutUs">About Us</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link fs-6" to="/contactUs">Contact Us</Link>
+                                    <Link className="nav-link fw-bold fs-6" to="/contactUs">Contact Us</Link>
                                 </li>
                             </ul>
                             <ul className="navbar-nav  mb-2 mb-lg-0 d-flex align-items-sm-centerms-5">

@@ -2,16 +2,18 @@
 @tailwind components;
 @tailwind utilities; */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 * {
     font-family: 'Poppins', sans-serif;
 }
 
-.btn-custom{
+.btn-custom {
     background-color: #DC4412;
     border-color: #DC4412;
     color: #ffffff;
 }
-.btn-custom:hover{
+
+.btn-custom:hover {
     border-color: #DC4412;
     color: #DC4412;
 }
@@ -24,39 +26,65 @@
 .custom-input:focus {
     border: 2px solid;
     border-color: #FF6000;
-    outline: none; 
-    box-shadow: none; 
+    outline: none;
+    box-shadow: none;
 }
 
-.nav-link.active{
-    color : white
+.nav-link.active {
+    color: white
 }
-.btn-custom-green{
+
+.btn-custom-green {
     background-color: #07A436;
     border-color: #07A436;
     color: #ffffff;
 }
-.btn-custom-green:hover{
+
+.btn-custom-green:hover {
     border-color: #07A436;
     color: #07A436;
 }
+
 .min-vh-100 {
     min-height: 100vh;
-  }
-  
-  .marquee {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
 }
 
-.marquee a {
-    display: inline-block;
-    padding-left: 100%;
-    animation: marquee 10s linear infinite;
+.praise-regular {
+    color: white;
+    font-size: 40px;
+    font-family: "Praise", cursive;
+    font-weight: 800;
+    font-style: italic;
 }
 
-@keyframes marquee {
-    from { transform: translateX(100%); }
-    to { transform: translateX(-100%); }
+.kurale-regular {
+    color: white;
+    font-size: 40px;
+    font-family: "Kurale", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.nav-link:focus {
+    color: #DC4412;
+    font-weight: 40px;
+}
+
+.responsive-height {
+    background-color: #DC4412;
+    height: 80px; /* Default height */
+}
+
+@media (max-width: 576px) { 
+    .responsive-height {
+        height: 200px;
+        width: 100vw; 
+        font-size: 11px;
+    }
+}
+@media (max-width: 768px) { 
+    .responsive-height {
+        height: 200px; 
+    }
 }
