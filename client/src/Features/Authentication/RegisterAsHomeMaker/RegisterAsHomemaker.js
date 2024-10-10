@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import useHomemakerStore from '../../../store/homemaker.store.js';
 
 const RegisterAsHomeMaker = () => {
-  const [frontside, setFrontside] = useState(true);
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
   const { signup } = useHomemakerStore();
@@ -40,7 +39,7 @@ const RegisterAsHomeMaker = () => {
   const onSubmit = async (data) => {
     try {
       const locationData = await fetchLocation();
-
+      console.log(locationData)
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('email', data.email);
@@ -79,10 +78,9 @@ const RegisterAsHomeMaker = () => {
                 <img src='./images/Logo_Text.jpg' alt='Logo' />
               </div>
               <div className='d-flex w-100 justify-content-center'>
-                {frontside?<p className='fw-bold' style={{ fontSize: "35px" }}>Create your account</p>:<p className='fw-bold' style={{ fontSize: "35px" }}>Add Personal Info</p>}
+                <p className='fw-bold' style={{ fontSize: "35px" }}>Create your account</p>
               </div>
               <form onSubmit={handleSubmit(onSubmit)} noValidate >
-                {frontside ? (
                   <>
                   <div className="row-md-4 mt-1">
                       <label htmlFor="name" className="form-label">Already have a account? <Link className="fs-6" style={{color:"#FF6000"}} to="/login">Login</Link></label>
@@ -114,6 +112,49 @@ const RegisterAsHomeMaker = () => {
                     </div>
 
                     <div className="row-md-4 mt-1">
+                      <label htmlFor="profileImage" className="form-label">Profile Image</label>
+                      <input
+                        type="file"
+                        className={`form-control ${errors.profileImage ? 'is-invalid' : ''}`}
+                        id="profileImage"
+                        {...register('profileImage', { })}
+                        style={{ border: "2px solid #FF6000" }}
+                      />
+                      {errors.profileImage && <div className="invalid-feedback">Profile image is required</div>}
+                    </div>
+
+                    <div className="row-md-4 mt-1">
+                      <label htmlFor="profileImage" className="form-label">License</label>
+                      <input
+                        type="file"
+                        className={`form-control ${errors.License ? 'is-invalid' : ''}`}
+                        id="License"
+                        {...register('profileImage', { })}
+                        style={{ border: "2px solid #FF6000" }}
+                      />
+                      {errors.License && <div className="invalid-feedback">License image is required</div>}
+                    </div>
+
+                    {/* <div className='mt-3'>
+                      <button className="fs-6 btn btn-custom-green px-4 w-100" type='button' onClick={fetchLocation}>
+                        <i className="bi bi-geo-alt me-2 text-white"></i>
+                        Get Location
+                      </button>
+                    </div> */}
+
+                    <div className="row-md-4 mt-1">
+                      <label htmlFor="phone" className="form-label">Phone Number</label>
+                      <input
+                        type="tel"
+                        className={`form-control ${errors.phone ? 'is-invalid' : ''} custom-input`}
+                        id="phone"
+                        {...register('phone', { required: true, pattern: /^[0-9]{10}$/ })}
+                        required
+                      />
+                      {errors.phone && <div className="invalid-feedback">Valid phone number is required (10 digits)</div>}
+                    </div>
+                    
+                    <div className="row-md-4 mt-1">
                       <label htmlFor="password" className="form-label">Password</label>
                       <input
                         type="password"
@@ -138,66 +179,11 @@ const RegisterAsHomeMaker = () => {
                     </div>
 
                     <div className='mt-5'>
-                      <button className="fs-6 btn btn-custom px-4 w-100" type='button' onClick={() => { setFrontside(false) }}>
-                        Continue
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-
-                    <div className="row-md-4 mt-1">
-                      <label htmlFor="profileImage" className="form-label">Profile Image</label>
-                      <input
-                        type="file"
-                        className={`form-control ${errors.profileImage ? 'is-invalid' : ''}`}
-                        id="profileImage"
-                        {...register('profileImage', { required: true })}
-                        style={{ border: "2px solid #FF6000" }}
-                      />
-                      {errors.profileImage && <div className="invalid-feedback">Profile image is required</div>}
-                    </div>
-
-                    <div className='mt-3'>
-                      <button className="fs-6 btn btn-custom-green px-4 w-100" type='button' onClick={fetchLocation}>
-                        <i className="bi bi-geo-alt me-2 text-white"></i>
-                        Get Location
-                      </button>
-                    </div>
-
-                    <div className="row-md-4 mt-1">
-                      <label htmlFor="phone" className="form-label">Phone Number</label>
-                      <input
-                        type="tel"
-                        className={`form-control ${errors.phone ? 'is-invalid' : ''} custom-input`}
-                        id="phone"
-                        {...register('phone', { required: true, pattern: /^[0-9]{10}$/ })}
-                        required
-                      />
-                      {errors.phone && <div className="invalid-feedback">Valid phone number is required (10 digits)</div>}
-                    </div>
-
-                    <div className="row-md-4 mt-1">
-                      <label htmlFor="address" className="form-label">Address</label>
-                      <input
-                        type="text"
-                        className={`form-control ${errors.address ? 'is-invalid' : ''} custom-input`}
-                        id="address"
-                        {...register('address', { required: true, minLength: 5 })}
-                        required
-                      />
-                      {errors.address && <div className="invalid-feedback">Address must be at least 5 characters long</div>}
-                    </div>
-
-
-
-                    <div className='mt-5'>
-                      <button className="fs-6 btn btn-custom px-4 w-100" type='submit'>
+                      <button className="fs-6 btn btn-custom px-4 w-100" type='button'>
                         Register
                       </button>
                     </div>
                   </>
-                )}
                 {locationError && <div className="text-danger mt-2">{locationError}</div>}
               </form>
             </div>
