@@ -10,7 +10,7 @@ const Homepage = () => {
             <div className="d-flex justify-content-center align-items-center bg-white shadow rounded-bottom-circle rounded-sm" style={{ height: "80vh" }}>
                 <div className='container'>
                     <div className='row flex-md-row flex-sm-column'>
-                        <div className='col-lg-6 col-md-6 col-sm-12 align-content-lg-center order-md-2'>
+                        <div className='col-lg-6 col-md-6 col-sm-12  align-content-lg-center order-md-2'>
                             <img src='./images/ThaliHero.png' style={{ height: "50vh", margin: "auto " }}></img>
                         </div>
                         <div className='col-lg-6 col-md-6 col-sm-12 align-content-lg-center'>
