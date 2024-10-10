@@ -10,6 +10,8 @@ import CloudKitchenCreation from '../Features/Dashboard/HomeMakerDashboard/Cloud
 import HomemakerMenu from '../Features/Dashboard/HomeMakerDashboard/HomemakerMenu';
 import HomemakerPage from '../Features/Homemaker/HomemakerPage';
 import SignUpOptions from '../Features/Authentication/SignUpOptions/SignUpOptions';
+import CloundKitchenForm from '../Features/Dashboard/CloudKitchenDashboard/CloudKitchenForm';
+import UploadItems from '../Features/Dashboard/CloudKitchenDashboard/UploadItems';
 
 function DabbaRoutes (){
     return (
@@ -17,6 +19,8 @@ function DabbaRoutes (){
             <Routes>
                 <Route path='/' element={<Homepage/>}></Route>
                 <Route path='/signup' element={<RegisterAsHomeMaker/>} ></Route>
+                <Route path='/cloudkitchenadditems' element={<UploadItems/>} ></Route>
+                <Route path='/cloudkitchen' element={<CloundKitchenForm/>} ></Route>
                 <Route path='/signupoptions' element={<SignUpOptions/>} ></Route>
                 <Route path='/login' element={<LoginAsHomemaker/>} ></Route>
                 <Route path='/dashboard' element={<EmployeeDashboard/>} ></Route>
