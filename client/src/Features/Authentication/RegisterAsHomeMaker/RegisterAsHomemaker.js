@@ -109,7 +109,7 @@ const RegisterAsHomeMaker = () => {
             <button type="submit" className="btn btn-primary">Register</button>
           </form>
         </div>
-      </div>
+      </div>  
     </div>
   );
 };

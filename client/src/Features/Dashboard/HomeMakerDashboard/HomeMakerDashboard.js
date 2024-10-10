@@ -4,11 +4,13 @@ import { useEffect } from "react";
 
 export default function HomemakerDashboard (){
 
-    const isKitchenCreated = true;
+    const isKitchenCreated = false;
     const navigate = useNavigate()
     useEffect(() => {
         if (isKitchenCreated){
             navigate('/HomemakerDashboard/Menu')
+        }else{
+            navigate('/HomemakerDashboard/CloudKitchenCreation')
         }
     },[])
     return (
