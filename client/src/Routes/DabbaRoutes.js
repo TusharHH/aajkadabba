@@ -9,6 +9,7 @@ import HomemakerDashboard from '../Features/Dashboard/HomeMakerDashboard/HomeMak
 import CloudKitchenCreation from '../Features/Dashboard/HomeMakerDashboard/CloudKitchenCreation';
 import HomemakerMenu from '../Features/Dashboard/HomeMakerDashboard/HomemakerMenu';
 import HomemakerPage from '../Features/Homemaker/HomemakerPage';
+import SignUpOptions from '../Features/Authentication/SignUpOptions/SignUpOptions';
 
 function DabbaRoutes (){
     return (
