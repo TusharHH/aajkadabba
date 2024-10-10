@@ -16,6 +16,7 @@ function DabbaRoutes (){
             <Routes>
                 <Route path='/' element={<Homepage/>}></Route>
                 <Route path='/signup' element={<RegisterAsHomeMaker/>} ></Route>
+                <Route path='/signupoptions' element={<SignUpOptions/>} ></Route>
                 <Route path='/login' element={<LoginAsHomemaker/>} ></Route>
                 <Route path='/dashboard' element={<EmployeeDashboard/>} ></Route>
                 <Route path='/dashboard/:id' element={<HomemakerPage/>}></Route>
